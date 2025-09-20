@@ -2,6 +2,7 @@ import React from 'react';
 import Weather from './Weather';
 import Calendar from './Calendar';
 // import './News.css';
+import userImg from '../assets/images/user.jpg';
 
 const News = () => {
   return (
@@ -28,9 +29,51 @@ const News = () => {
       </header>
       <div className="news-content flex gap-x-8 h-[calc(100%-16rem)] px-8 py-0">
         <div className="navbar w-72 h-full flex flex-col gap-y-8">
-          <div className="user w-full h-1/5 bg-zinc-900 rounded-2xl">User</div>
-          <nav className="categories w-full h-[calc(80%-2rem)] bg-zinc-900 rounded-2xl">
-            Categories
+          <div className="user w-full h-1/5 bg-zinc-900 rounded-2xl flex flex-col justify-center items-center gap-y-8 cursor-pointer">
+            <img
+              src={userImg}
+              alt="User Image"
+              className="w-28 aspect-square object-cover rounded-[50%]"
+            />
+            <p className="font-comfortaa text-2xl">Mary's Blog</p>
+          </div>
+          <nav className="categories w-full h-[calc(80%-2rem)] bg-zinc-900 rounded-2xl flex flex-col gap-y-8 p-8">
+            <h1 className="nav-heading font-bebas text-[clamp(1.5rem,2.5cqi,3rem)] tracking-[0.2rem] mb-8">
+              Categories
+            </h1>
+            <div className="nav-links flex flex-col gap-y-8 text-2xl uppercase tracking-[0.1rem]">
+              <a href="#" className="nav-link">
+                General
+              </a>
+              <a href="#" className="nav-link">
+                World
+              </a>
+              <a href="#" className="nav-link">
+                Business
+              </a>
+              <a href="#" className="nav-link">
+                Technology
+              </a>
+              <a href="#" className="nav-link">
+                Entertainment
+              </a>
+              <a href="#" className="nav-link">
+                Sports
+              </a>
+              <a href="#" className="nav-link">
+                Science
+              </a>
+              <a href="#" className="nav-link">
+                Health
+              </a>
+              <a href="#" className="nav-link">
+                Nation
+              </a>
+              <a href="#" className="nav-link">
+                Bookmarks{' '}
+                <i className="fa-regular fa-bookmark text-2xl ml-4"></i>
+              </a>
+            </div>
           </nav>
         </div>
         <div className="news-section w-[clamp(30rem,43cqi,40%)] h-full rounded-2xl">
