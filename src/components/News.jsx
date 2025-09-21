@@ -10,6 +10,8 @@ const News = () => {
   const [headline, setHeadline] = useState(null);
   const [news, setNews] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('general');
+  const [searchInput, setSearchInput] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const categories = [
     'general',
@@ -28,10 +30,20 @@ const News = () => {
     setSelectedCategory(category);
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchQuery(searchInput);
+    setSearchInput('');
+  };
+
   useEffect(() => {
     const fetchNews = async () => {
       const API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
-      const url = `https://gnews.io/api/v4/top-headlines?category=${selectedCategory}&lang=en&country=ca&apikey=${API_KEY}`;
+      let url = `https://gnews.io/api/v4/top-headlines?category=${selectedCategory}&lang=en&country=ca&apikey=${API_KEY}`;
+
+      if (searchQuery) {
+        url = `https://gnews.io/api/v4/search?q=${searchQuery}&lang=en&country=ca&apikey=${API_KEY}`;
+      }
 
       const response = await axios.get(url);
       const fetchedNews = response.data.articles;
@@ -44,7 +56,7 @@ const News = () => {
     };
 
     // fetchNews();
-  }, [selectedCategory]);
+  }, [selectedCategory, searchQuery]);
 
   return (
     <div className="news text-3xl text-neutral-200 w-full h-full flex flex-col justify-between gap-y-8">
@@ -53,15 +65,17 @@ const News = () => {
           News & Blogs
         </h1>
         <div className="search-bar relative">
-          <form>
+          <form onSubmit={handleSearch}>
             <input
               type="text"
               placeholder="Search News..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
               className="w-96 h-16 bg-zinc-950 outline-none rounded-[5rem] pl-8 pr-16 py-0 focus:w-[35rem] focus:placeholder-transparent transition-width duration-300"
             />
             <button
               type="submit"
-              className="bg-transparent absolute top-1/2 right-4 -translate-y-1/2 text-neutral-400 text-2xl"
+              className="bg-transparent absolute top-1/2 right-4 -translate-y-1/2 text-neutral-400 text-2xl cursor-pointer"
             >
               <i className="fa-solid fa-magnifying-glass"></i>
             </button>
