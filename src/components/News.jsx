@@ -5,6 +5,7 @@ import Calendar from './Calendar';
 import userImg from '../assets/images/user.jpg';
 import noImg from '../assets/images/no-img.png';
 import axios from 'axios';
+import NewsModal from './NewsModal';
 
 const News = () => {
   const [headline, setHeadline] = useState(null);
@@ -12,6 +13,8 @@ const News = () => {
   const [selectedCategory, setSelectedCategory] = useState('general');
   const [searchInput, setSearchInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
   const categories = [
     'general',
@@ -36,6 +39,11 @@ const News = () => {
     setSearchInput('');
   };
 
+  const handleArticleClick = (article) => {
+    setSelectedArticle(article);
+    setShowModal(true);
+  };
+
   useEffect(() => {
     const fetchNews = async () => {
       const API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
@@ -55,7 +63,7 @@ const News = () => {
       // console.log('News: ' + fetchedNews.slice(1, 7));
     };
 
-    // fetchNews();
+    fetchNews();
   }, [selectedCategory, searchQuery]);
 
   return (
@@ -116,7 +124,12 @@ const News = () => {
         </div>
         <div className="news-section w-[clamp(30rem,43cqi,40%)] h-full rounded-2xl">
           {headline && (
-            <div className="headline w-full h-[calc(50%-2rem)] bg-zinc-900 rounded-2xl mb-8 relative">
+            <div
+              className="headline w-full h-[calc(50%-2rem)] bg-zinc-900 rounded-2xl mb-8 relative"
+              onClick={() => {
+                handleArticleClick(headline);
+              }}
+            >
               <img
                 src={headline.image || noImg}
                 alt={headline.title}
@@ -133,6 +146,9 @@ const News = () => {
               <div
                 key={index}
                 className="news-grid-item w-full h-full min-h-60 rounded-2xl relative"
+                onClick={() => {
+                  handleArticleClick(article);
+                }}
               >
                 <img
                   src={article.image || noImg}
@@ -147,6 +163,11 @@ const News = () => {
             ))}
           </div>
         </div>
+        <NewsModal
+          show={showModal}
+          article={selectedArticle}
+          onClose={() => setShowModal(false)}
+        />
         <div className="my-blogs w-[clamp(20rem,27cqi,28%)] h-full bg-zinc-900 rounded-2xl">
           My Blogs
         </div>
