@@ -1,16 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Weather from './Weather';
 import Calendar from './Calendar';
 // import './News.css';
 import userImg from '../assets/images/user.jpg';
-import techImg from '../assets/images/tech.jpg';
-import sportsImg from '../assets/images/sports.jpg';
-import scienceImg from '../assets/images/science.jpg';
-import worldImg from '../assets/images/world.jpg';
-import healthImg from '../assets/images/health.jpg';
-import nationImg from '../assets/images/nation.jpg';
+import noImg from '../assets/images/no-img.png';
+import axios from 'axios';
 
 const News = () => {
+  const [headline, setHeadline] = useState(null);
+  const [news, setNews] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('general');
+
+  const categories = [
+    'general',
+    'world',
+    'business',
+    'technology',
+    'entertainment',
+    'sports',
+    'science',
+    'health',
+    'nation',
+  ];
+
+  const handleCategoryClick = (e, category) => {
+    e.preventDefault();
+    setSelectedCategory(category);
+  };
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      const API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
+      const url = `https://gnews.io/api/v4/top-headlines?category=${selectedCategory}&lang=en&country=ca&apikey=${API_KEY}`;
+
+      const response = await axios.get(url);
+      const fetchedNews = response.data.articles;
+
+      setHeadline(fetchedNews[0]);
+      setNews(fetchedNews.slice(1, 7));
+
+      // console.log('Headline: ' + fetchedNews[0]);
+      // console.log('News: ' + fetchedNews.slice(1, 7));
+    };
+
+    // fetchNews();
+  }, [selectedCategory]);
+
   return (
     <div className="news text-3xl text-neutral-200 w-full h-full flex flex-col justify-between gap-y-8">
       <header className="news-header w-full min-h-[7rem] bg-zinc-900 rounded-tl-2xl rounded-br-none rounded-tr-2xl rounded-bl-none flex justify-between items-center px-8 py-0">
@@ -48,33 +83,16 @@ const News = () => {
               Categories
             </h1>
             <div className="nav-links flex flex-col gap-y-8 text-2xl uppercase tracking-[0.1rem]">
-              <a href="#" className="nav-link">
-                General
-              </a>
-              <a href="#" className="nav-link">
-                World
-              </a>
-              <a href="#" className="nav-link">
-                Business
-              </a>
-              <a href="#" className="nav-link">
-                Technology
-              </a>
-              <a href="#" className="nav-link">
-                Entertainment
-              </a>
-              <a href="#" className="nav-link">
-                Sports
-              </a>
-              <a href="#" className="nav-link">
-                Science
-              </a>
-              <a href="#" className="nav-link">
-                Health
-              </a>
-              <a href="#" className="nav-link">
-                Nation
-              </a>
+              {categories.map((category) => (
+                <a
+                  href="#"
+                  key={category}
+                  className="nav-link"
+                  onClick={(e) => handleCategoryClick(e, category)}
+                >
+                  {category}
+                </a>
+              ))}
               <a href="#" className="nav-link">
                 Bookmarks{' '}
                 <i className="fa-regular fa-bookmark text-2xl ml-4"></i>
@@ -83,85 +101,36 @@ const News = () => {
           </nav>
         </div>
         <div className="news-section w-[clamp(30rem,43cqi,40%)] h-full rounded-2xl">
-          <div className="headline w-full h-[calc(50%-2rem)] bg-zinc-900 rounded-2xl mb-8 relative">
-            <img
-              src={techImg}
-              alt="Headline Image"
-              className="w-full h-full object-cover rounded-2xl opacity-40"
-            />
-            <h2 className="headline-title w-full absolute bottom-0 left-0 pl-4 pr-16 py-4 font-bebas text-[clamp(1.5rem,1.8cqi,3rem)] tracking-[0.1rem] text-neutral-100 bg-[rgba(0,0,0,0.7)] rounded-tl-0 rounded-br-[3rem] rounded-tr-0 rounded-bl-[3rem]">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea,
-              consequuntur!
-              <i className="fa-regular fa-bookmark absolute bottom-4 right-4 cursor-pointer"></i>
-            </h2>
-          </div>
+          {headline && (
+            <div className="headline w-full h-[calc(50%-2rem)] bg-zinc-900 rounded-2xl mb-8 relative">
+              <img
+                src={headline.image || noImg}
+                alt={headline.title}
+                className="w-full h-full object-cover rounded-2xl opacity-40"
+              />
+              <h2 className="headline-title w-full absolute bottom-0 left-0 pl-4 pr-16 py-4 font-bebas text-[clamp(1.5rem,1.8cqi,3rem)] tracking-[0.1rem] text-neutral-100 bg-[rgba(0,0,0,0.7)] rounded-tl-0 rounded-br-[3rem] rounded-tr-0 rounded-bl-[3rem]">
+                {headline.title}
+                <i className="fa-regular fa-bookmark absolute bottom-4 right-4 cursor-pointer"></i>
+              </h2>
+            </div>
+          )}
           <div className="news-grid w-full h-1/2 bg-zinc-900 rounded-2xl grid grid-cols-3 grid-rows-2 gap-4 p-5 justify-center items-center">
-            <div className="news-grid-item w-full h-full min-h-60 rounded-2xl relative">
-              <img
-                src={sportsImg}
-                alt="News Image"
-                className="w-full h-full block object-cover rounded-2xl opacity-50"
-              />
-              <h3 className="absolute bottom-0 left-0 py-4 pr-12 pl-4 font-bebas text-2xl font-light leading-[1.4rem] bg-[rgba(0,0,0,0.7)] w-full rounded-tl-0 rounded-tr-0 rounded-br-2xl rounded-bl-2xl">
-                Lorem ipsum dolor sit amet.
-                <i className="fa-regular fa-bookmark"></i>
-              </h3>
-            </div>
-            <div className="news-grid-item w-full h-full min-h-60 rounded-2xl relative">
-              <img
-                src={scienceImg}
-                alt="News Image"
-                className="w-full h-full block object-cover rounded-2xl opacity-50"
-              />
-              <h3 className="absolute bottom-0 left-0 py-4 pr-12 pl-4 font-bebas text-2xl font-light leading-[1.4rem] bg-[rgba(0,0,0,0.7)] w-full rounded-tl-0 rounded-tr-0 rounded-br-2xl rounded-bl-2xl">
-                Lorem ipsum dolor sit amet.
-                <i className="fa-regular fa-bookmark"></i>
-              </h3>
-            </div>
-            <div className="news-grid-item w-full h-full min-h-60 rounded-2xl relative">
-              <img
-                src={worldImg}
-                alt="News Image"
-                className="w-full h-full block object-cover rounded-2xl opacity-50"
-              />
-              <h3 className="absolute bottom-0 left-0 py-4 pr-12 pl-4 font-bebas text-2xl font-light leading-[1.4rem] bg-[rgba(0,0,0,0.7)] w-full rounded-tl-0 rounded-tr-0 rounded-br-2xl rounded-bl-2xl">
-                Lorem ipsum dolor sit amet.
-                <i className="fa-regular fa-bookmark"></i>
-              </h3>
-            </div>
-            <div className="news-grid-item w-full h-full min-h-60 rounded-2xl relative">
-              <img
-                src={healthImg}
-                alt="News Image"
-                className="w-full h-full block object-cover rounded-2xl opacity-50"
-              />
-              <h3 className="absolute bottom-0 left-0 py-4 pr-12 pl-4 font-bebas text-2xl font-light leading-[1.4rem] bg-[rgba(0,0,0,0.7)] w-full rounded-tl-0 rounded-tr-0 rounded-br-2xl rounded-bl-2xl">
-                Lorem ipsum dolor sit amet.
-                <i className="fa-regular fa-bookmark"></i>
-              </h3>
-            </div>
-            <div className="news-grid-item w-full h-full min-h-60 rounded-2xl relative">
-              <img
-                src={nationImg}
-                alt="News Image"
-                className="w-full h-full block object-cover rounded-2xl opacity-50"
-              />
-              <h3 className="absolute bottom-0 left-0 py-4 pr-12 pl-4 font-bebas text-2xl font-light leading-[1.4rem] bg-[rgba(0,0,0,0.7)] w-full rounded-tl-0 rounded-tr-0 rounded-br-2xl rounded-bl-2xl">
-                Lorem ipsum dolor sit amet.
-                <i className="fa-regular fa-bookmark"></i>
-              </h3>
-            </div>
-            <div className="news-grid-item w-full h-full min-h-60 rounded-2xl relative">
-              <img
-                src={techImg}
-                alt="News Image"
-                className="w-full h-full block object-cover rounded-2xl opacity-50"
-              />
-              <h3 className="absolute bottom-0 left-0 py-4 pr-12 pl-4 font-bebas text-2xl font-light leading-[1.4rem] bg-[rgba(0,0,0,0.7)] w-full rounded-tl-0 rounded-tr-0 rounded-br-2xl rounded-bl-2xl">
-                Lorem ipsum dolor sit amet.
-                <i className="fa-regular fa-bookmark"></i>
-              </h3>
-            </div>
+            {news.map((article, index) => (
+              <div
+                key={index}
+                className="news-grid-item w-full h-full min-h-60 rounded-2xl relative"
+              >
+                <img
+                  src={article.image || noImg}
+                  alt={article.title}
+                  className="w-full h-full block object-cover rounded-2xl opacity-50"
+                />
+                <h3 className="absolute bottom-0 left-0 py-4 pr-12 pl-4 font-bebas text-2xl font-light leading-[1.4rem] bg-[rgba(0,0,0,0.7)] w-full rounded-tl-0 rounded-tr-0 rounded-br-2xl rounded-bl-2xl">
+                  {article.title}
+                  <i className="fa-regular fa-bookmark absolute bottom-4 right-4 cursor-pointer"></i>
+                </h3>
+              </div>
+            ))}
           </div>
         </div>
         <div className="my-blogs w-[clamp(20rem,27cqi,28%)] h-full bg-zinc-900 rounded-2xl">
