@@ -234,8 +234,13 @@ const News = () => {
           <Calendar />
         </div>
       </div>
-      <footer className="news-footer w-full min-h-20 bg-zinc-900 rounded-tl-0 rounded-tr-0 rounded-br-2xl rounded-bl-2xl">
-        Footer
+      <footer className="news-footer w-full min-h-20 bg-zinc-900 rounded-tl-0 rounded-tr-0 rounded-br-2xl rounded-bl-2xl flex items-center justify-between py-0 px-16">
+        <p className="text-[1.4rem] font-light text-neutral-300">
+          <span className="font-bebas text-[2rem]">News & Blogs App</span>
+        </p>
+        <p className="text-[1.4rem] font-light text-neutral-300">
+          &copy; All Right Reserved By KellyBytes
+        </p>
       </footer>
     </div>
   );
