@@ -86,7 +86,7 @@ const Calendar = () => {
               day + 1 === currentDate.getDate() &&
               currentMonth === currentDate.getMonth() &&
               currentYear === currentDate.getFullYear()
-                ? 'text-[1.8rem] text-neutral-50 bg-gradient-to-r from-purple-400 to-indigo-500 rounded-[50%]'
+                ? 'text-[1.8rem] text-neutral-50 bg-linear-to-r from-purple-400 to-indigo-500 rounded-[50%]'
                 : 'text-[1.3rem] text-neutral-200'
             }`}
           >

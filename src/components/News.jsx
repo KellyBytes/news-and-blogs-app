@@ -80,7 +80,7 @@ const News = () => {
       // console.log('News: ' + fetchedNews.slice(1, 7));
     };
 
-    fetchNews();
+    // fetchNews();
   }, [selectedCategory, searchQuery]);
 
   useEffect(() => {
