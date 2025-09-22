@@ -63,11 +63,11 @@ const News = () => {
 
   useEffect(() => {
     const fetchNews = async () => {
-      const API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
-      let url = `https://gnews.io/api/v4/top-headlines?category=${selectedCategory}&lang=en&country=ca&apikey=${API_KEY}`;
+      const N_API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
+      let url = `https://gnews.io/api/v4/top-headlines?category=${selectedCategory}&lang=en&country=ca&apikey=${N_API_KEY}`;
 
       if (searchQuery) {
-        url = `https://gnews.io/api/v4/search?q=${searchQuery}&lang=en&country=ca&apikey=${API_KEY}`;
+        url = `https://gnews.io/api/v4/search?q=${searchQuery}&lang=en&country=ca&apikey=${N_API_KEY}`;
       }
 
       const response = await axios.get(url);
@@ -144,7 +144,7 @@ const News = () => {
                 className="nav-link"
                 onClick={() => setShowBookmarksModal(true)}
               >
-                Bookmarks <i className="fa-solid fa-bookmark text-2xl ml-4"></i>
+                Bookmarks <i className="bx bxs-bookmarks text-3xl ml-2"></i>
               </a>
             </div>
           </nav>
@@ -165,13 +165,13 @@ const News = () => {
               <h2 className="headline-title w-full absolute bottom-0 left-0 pl-4 pr-16 py-4 font-bebas text-[clamp(1.5rem,1.8cqi,3rem)] tracking-[0.1rem] text-neutral-100 bg-[rgba(0,0,0,0.7)] rounded-tl-0 rounded-br-[3rem] rounded-tr-0 rounded-bl-[3rem]">
                 {headline.title}
                 <i
-                  className={`${
+                  className={`bx ${
                     bookmarks.some(
                       (bookmark) => bookmark.title === headline.title
                     )
-                      ? 'fa-solid'
-                      : 'fa-regular'
-                  } fa-bookmark absolute bottom-4 right-4 cursor-pointer`}
+                      ? 'bxs-bookmarks'
+                      : 'bx-bookmarks'
+                  } absolute bottom-4 right-4 cursor-pointer`}
                   onClick={(e) => {
                     e.stopPropagation();
                     handleBookmarkClick(headline);
@@ -197,13 +197,13 @@ const News = () => {
                 <h3 className="absolute bottom-0 left-0 py-4 pr-12 pl-4 font-bebas text-2xl font-light leading-[1.4rem] bg-[rgba(0,0,0,0.7)] w-full rounded-tl-0 rounded-tr-0 rounded-br-2xl rounded-bl-2xl">
                   {article.title}
                   <i
-                    className={`${
+                    className={`bx ${
                       bookmarks.some(
                         (bookmark) => bookmark.title === article.title
                       )
-                        ? 'fa-solid'
-                        : 'fa-regular'
-                    } fa-bookmark absolute bottom-4 right-4 cursor-pointer`}
+                        ? 'bxs-bookmarks'
+                        : 'bx-bookmarks'
+                    } absolute bottom-4 right-4 cursor-pointer`}
                     onClick={(e) => {
                       e.stopPropagation();
                       handleBookmarkClick(article);
