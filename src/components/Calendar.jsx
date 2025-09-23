@@ -39,7 +39,7 @@ const Calendar = () => {
   };
 
   return (
-    <div className="calendar w-full min-w-[28rem] h-[calc(55%-2rem)] bg-zinc-900 rounded-2xl p-6 grid place-items-center">
+    <div className="calendar w-full min-w-[28rem] h-full lg:h-[calc(55%-2rem)] bg-zinc-900 rounded-2xl p-6 grid place-items-center">
       <div className="navigate-date w-full flex items-center justify-between gap-x-4 pl-4 mb-6">
         <h2 className="month text-[2rem] font-light text-neutral-300">
           {monthsOfYear[currentMonth]},

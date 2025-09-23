@@ -93,7 +93,7 @@ const Weather = () => {
   }, []);
 
   return (
-    <div className="weather w-full min-w-[28rem] h-[45%] bg-zinc-900 rounded-2xl py-8 px-[1.5rem] flex flex-col justify-center items-center gap-y-12">
+    <div className="weather w-full min-w-[28rem] h-full lg:h-[45%] bg-zinc-900 rounded-2xl py-8 px-[1.5rem] mb-8 sm:mb-0 flex flex-col justify-center items-center gap-y-12">
       <div className="search flex flex-col gap-y-4">
         <div className="search-top flex items-center gap-x-3">
           <i className="fa-solid fa-location-dot text-[2.5rem] text-neutral-200 -translate-y-2"></i>
@@ -106,7 +106,7 @@ const Weather = () => {
           <input
             type="text"
             placeholder="Enter Location"
-            className="w-[clamp(15rem,14cqi,25rem)] h-16 bg-transparent border-b-[0.1rem] border-[#aaa] text-[1.5rem] text-neutral-200 pl-4"
+            className="w-[30rem] lg:w-[clamp(15rem,14cqi,25rem)] h-16 bg-transparent border-b-[0.1rem] border-[#aaa] text-[1.5rem] text-neutral-200 pl-4"
             value={location}
             onFocus={(e) => (e.target.value = '')}
             onChange={handleInputChange}

@@ -106,9 +106,9 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
   }, []);
 
   return (
-    <div className="news text-3xl text-neutral-200 w-full h-full flex flex-col justify-between gap-y-8">
+    <div className="news text-3xl text-neutral-200 w-full h-full flex flex-col justify-between gap-y-8 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] lg:overflow-hidden">
       <header className="news-header w-full min-h-[7rem] bg-zinc-900 rounded-tl-2xl rounded-br-none rounded-tr-2xl rounded-bl-none flex justify-between items-center px-8 py-0">
-        <h1 className="logo font-bebas text-7xl tracking-[0.2rem]">
+        <h1 className="logo font-bebas text-[3rem] sm:text-7xl tracking-[0.2rem]">
           News & Blogs
         </h1>
         <div className="search-bar relative">
@@ -118,7 +118,7 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
               placeholder="Search News..."
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className="w-96 h-16 bg-zinc-950 outline-none rounded-[5rem] pl-8 pr-16 py-0 focus:w-[35rem] focus:placeholder-transparent transition-width duration-300"
+              className="w-64 sm:w-96 h-16 bg-zinc-950 outline-none rounded-[5rem] pl-8 pr-16 py-0 focus:sm:w-[35rem] focus:placeholder-transparent transition-width duration-300"
             />
             <button
               type="submit"
@@ -129,10 +129,10 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
           </form>
         </div>
       </header>
-      <div className="news-content flex gap-x-8 h-[calc(100%-16rem)] px-8 py-0">
-        <div className="navbar w-72 h-full flex flex-col gap-y-8">
+      <div className="news-content w-full h-[200rem] flex flex-col gap-y-8 lg:flex-row lg:gap-x-8 lg:h-[calc(100%-16rem)] px-8 py-0">
+        <div className="navbar w-full h-[30rem] mb-8 sm:h-[18rem] sm:mb-0 lg:w-72 lg:h-full flex justify-between flex-col sm:flex-row lg:flex-col gap-y-6 sm:gap-y-8">
           <div
-            className="user w-full h-1/5 bg-zinc-900 rounded-2xl flex flex-col justify-center items-center gap-y-8 cursor-pointer"
+            className="user w-full sm:w-[calc(30%-2rem)] min-h-[40%] h-full lg:w-full lg:h-1/5 lg:min-h-auto bg-zinc-900 rounded-2xl flex sm:flex-col justify-center items-center gap-y-8 cursor-pointer"
             onClick={onShowBlogs}
           >
             <img
@@ -140,18 +140,20 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
               alt="User Image"
               className="w-28 aspect-square object-cover rounded-[50%]"
             />
-            <p className="font-comfortaa text-2xl">Mary's Blog</p>
+            <p className="font-comfortaa text-xl ml-4 sm:text-2xl sm:ml-0">
+              Mary's Blog
+            </p>
           </div>
-          <nav className="categories w-full h-[calc(80%-2rem)] bg-zinc-900 rounded-2xl flex flex-col gap-y-8 p-8">
-            <h1 className="nav-heading font-bebas text-[clamp(1.5rem,2.5cqi,3rem)] tracking-[0.2rem] mb-8">
+          <nav className="categories w-full sm:w-[70%] h-full lg:w-full lg:h-[calc(80%-2rem)] bg-zinc-900 rounded-2xl flex flex-col justify-center items-center lg:justify-normal gap-x-4 lg:gap-y-8 p-8">
+            <h1 className="nav-heading hidden sm:block font-bebas text-[clamp(1.5rem,2.5cqi,3rem)] tracking-[0.2rem] mb-8">
               Categories
             </h1>
-            <div className="nav-links flex flex-col gap-y-4 lg:gap-y-8 text-2xl uppercase tracking-[0.1rem] ">
+            <div className="nav-links flex flex-wrap justify-center lg:flex-col gap-y-4 lg:gap-y-8 text-2xl uppercase tracking-[0.1rem] ">
               {categories.map((category) => (
                 <a
                   href="#"
                   key={category}
-                  className={`nav-link ${
+                  className={`nav-link mr-8 lg:mr-0 ${
                     category === selectedCategory ? 'text-red-400' : ''
                   }`}
                   onClick={(e) => handleCategoryClick(e, category)}
@@ -169,7 +171,7 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
             </div>
           </nav>
         </div>
-        <div className="news-section w-[clamp(30rem,43cqi,40%)] h-full rounded-2xl overflow-hidden">
+        <div className="news-section w-full lg:w-[clamp(30rem,43cqi,40%)] h-full rounded-2xl overflow-hidden">
           {headline && (
             <div
               className="headline w-full h-[calc(50%-2rem)] bg-zinc-900 rounded-2xl mb-8 relative"
@@ -200,7 +202,7 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
               </h2>
             </div>
           )}
-          <div className="news-grid w-full h-1/2 bg-zinc-900 rounded-2xl grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 xl:grid-rows-2 gap-4 p-5 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] justify-center items-center">
+          <div className="news-grid w-full h-1/2 bg-zinc-900 rounded-2xl grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-5 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] justify-center items-center">
             {news.map((article, index) => (
               <div
                 key={index}
@@ -246,7 +248,7 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
           onSelectArticle={handleArticleClick}
           onDeleteBookmark={handleBookmarkClick}
         />
-        <div className="my-blogs w-[clamp(20rem,27cqi,28%)] h-full bg-zinc-900 rounded-2xl overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]  flex flex-col gap-y-12 pb-8">
+        <div className="my-blogs w-full lg:w-[clamp(20rem,27cqi,28%)] h-full bg-zinc-900 rounded-2xl overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] flex flex-col gap-y-4 pb-8">
           <h1 className="my-blogs-heading font-bebas text-[3rem] text-neutral-200 tracking-[0.1rem] p-8">
             My Blogs
           </h1>
@@ -254,7 +256,7 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
             {blogs.map((blog, index) => (
               <div
                 key={index}
-                className="blog-post grow-0 shrink basis-[calc(100%-0.6rem)] lg:basis-[calc(50%-0.6rem)] rounded-2xl relative group group"
+                className="blog-post grow-0 shrink basis-[calc(100%-0.6rem)] sm:basis-[calc(50%-0.6rem)] lg:basis-[calc(50%-0.6rem)] rounded-2xl relative group group"
                 onClick={() => handleBlogClick(blog)}
               >
                 <img
@@ -293,12 +295,12 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
             />
           )}
         </div>
-        <div className="weather-calendar flex-1 flex flex-col gap-y-8">
+        <div className="weather-calendar flex gap-x-8 flex-col sm:flex-row lg:flex-1 lg:flex-col lg:gap-y-8">
           <Weather />
           <Calendar />
         </div>
       </div>
-      <footer className="news-footer w-full min-h-20 bg-zinc-900 rounded-tl-0 rounded-tr-0 rounded-br-2xl rounded-bl-2xl flex items-center justify-between py-0 px-16">
+      <footer className="news-footer w-full min-h-32 sm:min-h-20 bg-zinc-900 rounded-tl-0 rounded-tr-0 rounded-br-2xl rounded-bl-2xl flex flex-col justify-center items-center gap-y-4 sm:flex-row sm:justify-between py-0 px-16">
         <p className="text-[1.4rem] font-light text-neutral-300">
           <span className="font-bebas text-[2rem]">News & Blogs App</span>
         </p>
