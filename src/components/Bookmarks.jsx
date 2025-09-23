@@ -13,7 +13,7 @@ const Bookmarks = ({
 
   return (
     <div className="modal-overlay fixed inset-0 bg-[rgba(0,0,0,0.7)] flex justify-center items-center z-[1000]">
-      <div className="modal-content w-[90%] max-w-[60rem] h-auto max-h-full bg-zinc-900 p-16 rounded-2xl shadow-[0,0,5rem,rgba(0,0,0,0.5)] relative">
+      <div className="modal-content w-[90%] max-w-[60rem] h-auto max-h-[90%] bg-zinc-900 p-16 rounded-2xl shadow-[0,0,5rem,rgba(0,0,0,0.5)] relative overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <span
           className="close-button absolute top-6 right-10 text-[2rem] text-neutral-50 cursor-pointer"
           onClick={onClose}

@@ -90,7 +90,7 @@ const Blogs = ({ onBack, onCreateBlog, editPost, isEditing }) => {
       <div className="blogs-right w-1/2 h-full flex justify-center items-center relative">
         {!showForm && !isSubmitted && (
           <button
-            className="post-btn w-[clamp(15rem,16cqi,30rem)] aspect-4/1 bg-linear-to-r from-purple-400 to-indigo-500 border-none rounded-[5rem] text-[2.5rem] font-bold tracking-[0.1rem] uppercase text-neutral-50 text-shadow-[0_0.5rem_1rem_rgba(0,0,0,0.2)] cursor-pointer active:translate-y-[0.2rem]"
+            className="post-btn w-[clamp(15rem,16cqi,30rem)] aspect-4/1 bg-linear-to-r from-purple-400 to-indigo-500 border-none rounded-[5rem] text-[clamp(1.4rem,1.5cqi,2.5rem)] font-bold tracking-[0.1rem] uppercase text-neutral-50 text-shadow-[0_0.5rem_1rem_rgba(0,0,0,0.2)] cursor-pointer active:translate-y-[0.2rem]"
             onClick={() => setShowForm(true)}
           >
             Create New Post

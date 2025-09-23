@@ -97,7 +97,7 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
       // console.log('News: ' + fetchedNews.slice(1, 7));
     };
 
-    // fetchNews();
+    fetchNews();
   }, [selectedCategory, searchQuery]);
 
   useEffect(() => {
@@ -146,7 +146,7 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
             <h1 className="nav-heading font-bebas text-[clamp(1.5rem,2.5cqi,3rem)] tracking-[0.2rem] mb-8">
               Categories
             </h1>
-            <div className="nav-links flex flex-col gap-y-8 text-2xl uppercase tracking-[0.1rem]">
+            <div className="nav-links flex flex-col gap-y-4 lg:gap-y-8 text-2xl uppercase tracking-[0.1rem] ">
               {categories.map((category) => (
                 <a
                   href="#"
@@ -169,7 +169,7 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
             </div>
           </nav>
         </div>
-        <div className="news-section w-[clamp(30rem,43cqi,40%)] h-full rounded-2xl">
+        <div className="news-section w-[clamp(30rem,43cqi,40%)] h-full rounded-2xl overflow-hidden">
           {headline && (
             <div
               className="headline w-full h-[calc(50%-2rem)] bg-zinc-900 rounded-2xl mb-8 relative"
@@ -182,7 +182,7 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
                 alt={headline.title}
                 className="w-full h-full object-cover rounded-2xl opacity-40"
               />
-              <h2 className="headline-title w-full absolute bottom-0 left-0 pl-4 pr-16 py-4 font-bebas text-[clamp(1.5rem,1.8cqi,3rem)] tracking-[0.1rem] text-neutral-100 bg-[rgba(0,0,0,0.7)] rounded-tl-0 rounded-br-[3rem] rounded-tr-0 rounded-bl-[3rem]">
+              <h2 className="headline-title w-full absolute bottom-0 left-0 pl-4 pr-16 py-4 font-bebas text-[clamp(1.5rem,1.8cqi,3rem)] tracking-[0.1rem] text-neutral-100 bg-[rgba(0,0,0,0.7)] rounded-br-2xl rounded-bl-2xl">
                 {headline.title}
                 <i
                   className={`bx ${
@@ -200,7 +200,7 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
               </h2>
             </div>
           )}
-          <div className="news-grid w-full h-1/2 bg-zinc-900 rounded-2xl grid grid-cols-3 grid-rows-2 gap-4 p-5 justify-center items-center">
+          <div className="news-grid w-full h-1/2 bg-zinc-900 rounded-2xl grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 xl:grid-rows-2 gap-4 p-5 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] justify-center items-center">
             {news.map((article, index) => (
               <div
                 key={index}
@@ -246,7 +246,7 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
           onSelectArticle={handleArticleClick}
           onDeleteBookmark={handleBookmarkClick}
         />
-        <div className="my-blogs w-[clamp(20rem,27cqi,28%)] h-full bg-zinc-900 rounded-2xl flex flex-col gap-y-12 pb-8">
+        <div className="my-blogs w-[clamp(20rem,27cqi,28%)] h-full bg-zinc-900 rounded-2xl overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]  flex flex-col gap-y-12 pb-8">
           <h1 className="my-blogs-heading font-bebas text-[3rem] text-neutral-200 tracking-[0.1rem] p-8">
             My Blogs
           </h1>
@@ -254,7 +254,7 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
             {blogs.map((blog, index) => (
               <div
                 key={index}
-                className="blog-post grow-0 shrink basis-[calc(50%-0.6rem)] rounded-2xl relative group group"
+                className="blog-post grow-0 shrink basis-[calc(100%-0.6rem)] lg:basis-[calc(50%-0.6rem)] rounded-2xl relative group group"
                 onClick={() => handleBlogClick(blog)}
               >
                 <img
