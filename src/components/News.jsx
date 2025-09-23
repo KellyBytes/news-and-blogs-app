@@ -4,11 +4,16 @@ import Calendar from './Calendar';
 // import './News.css';
 import userImg from '../assets/images/user.jpg';
 import noImg from '../assets/images/no-img.png';
+import blogImg1 from '../assets/images/blog1.jpg';
+import blogImg2 from '../assets/images/blog2.jpg';
+import blogImg3 from '../assets/images/blog3.jpg';
+import blogImg4 from '../assets/images/blog4.jpg';
 import axios from 'axios';
 import NewsModal from './NewsModal';
 import Bookmarks from './Bookmarks';
+import BlogsModal from './BlogsModal';
 
-const News = () => {
+const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
   const [headline, setHeadline] = useState(null);
   const [news, setNews] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('general');
@@ -18,6 +23,8 @@ const News = () => {
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [bookmarks, setBookmarks] = useState([]);
   const [showBookmarksModal, setShowBookmarksModal] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [showBlogsModal, setShowBlogsModal] = useState(false);
 
   const categories = [
     'general',
@@ -59,6 +66,16 @@ const News = () => {
       localStorage.setItem('bookmarks', JSON.stringify(updatedBookmarks));
       return updatedBookmarks;
     });
+  };
+
+  const handleBlogClick = (blog) => {
+    setSelectedPost(blog);
+    setShowBlogsModal(true);
+  };
+
+  const closeBlogsModal = () => {
+    setShowBlogsModal(false);
+    setSelectedPost(null);
   };
 
   useEffect(() => {
@@ -114,7 +131,10 @@ const News = () => {
       </header>
       <div className="news-content flex gap-x-8 h-[calc(100%-16rem)] px-8 py-0">
         <div className="navbar w-72 h-full flex flex-col gap-y-8">
-          <div className="user w-full h-1/5 bg-zinc-900 rounded-2xl flex flex-col justify-center items-center gap-y-8 cursor-pointer">
+          <div
+            className="user w-full h-1/5 bg-zinc-900 rounded-2xl flex flex-col justify-center items-center gap-y-8 cursor-pointer"
+            onClick={onShowBlogs}
+          >
             <img
               src={userImg}
               alt="User Image"
@@ -226,8 +246,52 @@ const News = () => {
           onSelectArticle={handleArticleClick}
           onDeleteBookmark={handleBookmarkClick}
         />
-        <div className="my-blogs w-[clamp(20rem,27cqi,28%)] h-full bg-zinc-900 rounded-2xl">
-          My Blogs
+        <div className="my-blogs w-[clamp(20rem,27cqi,28%)] h-full bg-zinc-900 rounded-2xl flex flex-col gap-y-12 pb-8">
+          <h1 className="my-blogs-heading font-bebas text-[3rem] text-neutral-200 tracking-[0.1rem] p-8">
+            My Blogs
+          </h1>
+          <div className="blog-posts flex flex-wrap justify-between gap-[1.2rem] p-[1.2rem]">
+            {blogs.map((blog, index) => (
+              <div
+                key={index}
+                className="blog-post grow-0 shrink basis-[calc(50%-0.6rem)] rounded-2xl relative group group"
+                onClick={() => handleBlogClick(blog)}
+              >
+                <img
+                  src={blog.image || noImg}
+                  alt={blog.title}
+                  className="w-full h-full object-cover rounded-2xl opacity-50"
+                />
+                <h3 className="w-full absolute bottom-0 left-0 p-4 bg-[rgba(0,0,0,0.7)] rounded-br-2xl rounded-bl-2xl text-[1.6rem] font-light uppercase leading-[1.6rem] text-neutral-50 break-words">
+                  {blog.title}
+                </h3>
+                <div className="post-buttons absolute top-4 right-4 flex justify-center gap-x-8 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                  <button
+                    className="edit-post bg-transparent outline-none text-[2.5rem] text-neutral-50 cursor-pointer"
+                    onClick={() => onEditBlog(blog)}
+                  >
+                    <i className="bx bxs-edit"></i>
+                  </button>
+                  <button
+                    className="delete-post bg-transparent outline-none text-[2.5rem] text-neutral-50 cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDeleteBlog(blog);
+                    }}
+                  >
+                    <i className="bx bxs-x-circle"></i>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          {selectedPost && showBlogsModal && (
+            <BlogsModal
+              show={showBlogsModal}
+              blog={selectedPost}
+              onClose={closeBlogsModal}
+            />
+          )}
         </div>
         <div className="weather-calendar flex-1 flex flex-col gap-y-8">
           <Weather />
