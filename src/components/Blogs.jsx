@@ -102,7 +102,7 @@ const Blogs = ({ onBack, onCreateBlog, editPost, isEditing }) => {
           </p>
         )}
         <div
-          className={`blogs-right-form max-h-[calc(100vh-30%)] overflow-y-auto h-full flex flex-col justify-start items-center mb-10 sm:mb-0 lg:justify-center gap-y-4 lg:gap-y-20 ${
+          className={`blogs-right-form max-h-[calc(100vh-30%)] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] h-full flex flex-col justify-start items-center mb-10 sm:mb-0 lg:justify-center gap-y-4 lg:gap-y-20 ${
             showForm ? 'visible' : 'hidden'
           }`}
         >
