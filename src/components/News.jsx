@@ -80,14 +80,23 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
 
   useEffect(() => {
     const fetchNews = async () => {
-      const N_API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
-      let url = `https://gnews.io/api/v4/top-headlines?category=${selectedCategory}&lang=en&country=ca&apikey=${N_API_KEY}`;
+      // --- Comment out the following to deploy
+      // const N_API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
+      // let url = `https://gnews.io/api/v4/top-headlines?category=${selectedCategory}&lang=en&country=ca&apikey=${N_API_KEY}`;
 
-      if (searchQuery) {
-        url = `https://gnews.io/api/v4/search?q=${searchQuery}&lang=en&country=ca&apikey=${N_API_KEY}`;
-      }
+      // if (searchQuery) {
+      //   url = `https://gnews.io/api/v4/search?q=${searchQuery}&lang=en&country=ca&apikey=${N_API_KEY}`;
+      // }
 
-      const response = await axios.get(url);
+      // const response = await axios.get(url);
+      /// --- Comment out above to deploy
+
+      // --- Uncomment the following to deploy
+      const response = await axios.get(
+        `/.netlify/functions/getNews?category=${selectedCategory}&search=${searchQuery}`
+      );
+      // --- Uncomment above to deploy
+
       const fetchedNews = response.data.articles;
 
       setHeadline(fetchedNews[0]);
