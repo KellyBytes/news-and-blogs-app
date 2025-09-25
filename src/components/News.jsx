@@ -41,13 +41,13 @@ const News = ({ onShowBlogs, blogs, onEditBlog, onDeleteBlog }) => {
   const handleCategoryClick = (e, category) => {
     e.preventDefault();
     setSelectedCategory(category);
+    setSearchQuery('');
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchQuery(searchInput);
     setSearchInput('');
-    setSelectedCategory('general');
   };
 
   const handleArticleClick = (article) => {
