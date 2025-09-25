@@ -3,12 +3,15 @@ const axios = require('axios');
 exports.handler = async (event) => {
   try {
     const API_KEY = process.env.GNEWS_API_KEY;
+    const { category = 'general', search = '' } =
+      event.queryStringParameters || {};
 
-    let url = `https://gnews.io/api/v4/top-headlines?lang=en&country=ca&apikey=${API_KEY}`;
-    const { queryStringParameters } = event;
+    let url = `https://gnews.io/api/v4/top-headlines?category=${category}&lang=en&country=ca&apikey=${API_KEY}`;
 
-    if (queryStringParameters && queryStringParameters.q) {
-      url = `https://gnews.io/api/v4/search?q=${queryStringParameters.q}&lang=en&country=ca&apikey=${API_KEY}`;
+    if (search) {
+      url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(
+        search
+      )}&lang=en&country=ca&apikey=${API_KEY}`;
     }
 
     const response = await axios.get(url);
