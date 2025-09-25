@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function handler(event) {
-  const API_KEY = process.env.VITE_GNEWS_API_KEY;
+  const API_KEY = process.env.GNEWS_API_KEY;
   const category = event.queryStringParameters.category || 'general';
   const search = event.queryStringParameters.search || '';
 
@@ -21,6 +21,7 @@ export async function handler(event) {
       },
     };
   } catch (error) {
+    console.error('GNews API error:', error.response?.data || error.message);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: error.message }),
